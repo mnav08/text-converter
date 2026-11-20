@@ -31,14 +31,31 @@
 /* ---------- Top bar ---------- */
 
 .app-bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 56px;
   margin-bottom: var(--space-lg);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.app-bar-field {
+  position: absolute;
+  inset: 0;
+  left: auto;
+  width: min(60%, 420px);
+  height: 100%;
+  opacity: 0.6;
+  mask-image: linear-gradient(to left, black 0%, black 55%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .app-mark {
+  position: relative;
+  z-index: 1;
   margin: 0;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
@@ -133,6 +150,18 @@
   color: var(--color-muted);
   margin-bottom: var(--space-sm);
   flex-shrink: 0;
+  transition: color var(--dur-long) var(--ease-out);
+}
+
+.route-arrow.is-pulsing {
+  color: var(--color-accent);
+  animation: signal-pulse var(--dur-long) var(--ease-out);
+}
+
+@keyframes signal-pulse {
+  0% { transform: translateX(0) scale(1); opacity: 1; }
+  40% { transform: translateX(4px) scale(1.25); opacity: 0.75; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
 }
 
 .control-strip-actions {
@@ -158,7 +187,10 @@
   background: var(--color-paper);
   box-shadow: var(--shadow-card);
   overflow: hidden;
+  transition: border-color var(--dur-long) var(--ease-out);
 }
+
+.pane.is-received { border-color: var(--color-accent); }
 
 .pane-head {
   display: flex;
@@ -175,10 +207,22 @@
   max-width: none;
 }
 
+.pane-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
 .pane-tag {
   font-family: var(--font-outlier);
   font-size: var(--text-xs);
   color: var(--color-accent-2);
+}
+
+.pane-count {
+  font-family: var(--font-outlier);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
 }
 
 .dropzone {

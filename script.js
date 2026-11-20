@@ -1126,6 +1126,10 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
   const downloadBtn = document.getElementById("downloadBtn");
   const fromTag = document.getElementById("fromTag");
   const toTag = document.getElementById("toTag");
+  const inputCount = document.getElementById("inputCount");
+  const outputCount = document.getElementById("outputCount");
+  const routeArrow = document.querySelector(".route-arrow");
+  const outputPane = outputText.closest(".pane");
 
   /* ---------- Format selection ---------- */
 
@@ -1149,6 +1153,18 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
   toFormatSelect.addEventListener("change", updateFormatTags);
   updateToFormatOptions();
 
+  /* ---------- Live character counts ---------- */
+
+  function charLabel(length) {
+    return `${length} char${length === 1 ? "" : "s"}`;
+  }
+
+  inputText.addEventListener("input", () => {
+    inputCount.textContent = charLabel(inputText.value.length);
+  });
+  inputCount.textContent = charLabel(inputText.value.length);
+  outputCount.textContent = charLabel(outputText.value.length);
+
   /* ---------- File loading (picker + drag and drop) ---------- */
 
   function loadFile(file) {
@@ -1157,6 +1173,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     const reader = new FileReader();
     reader.onload = () => {
       inputText.value = reader.result;
+      inputCount.textContent = charLabel(inputText.value.length);
       if (format) {
         fromFormatSelect.value = format;
         updateToFormatOptions();
@@ -1192,6 +1209,19 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
 
   /* ---------- Convert ---------- */
 
+  function pulseRoute() {
+    routeArrow.classList.remove("is-pulsing");
+    void routeArrow.offsetWidth;
+    routeArrow.classList.add("is-pulsing");
+  }
+
+  function flashReceived() {
+    outputPane.classList.remove("is-received");
+    void outputPane.offsetWidth;
+    outputPane.classList.add("is-received");
+    setTimeout(() => outputPane.classList.remove("is-received"), 600);
+  }
+
   convertBtn.addEventListener("click", () => {
     const convert = CONVERSIONS[fromFormatSelect.value][toFormatSelect.value];
     try {
@@ -1199,6 +1229,9 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     } catch (error) {
       outputText.value = `Conversion failed: ${error.message}`;
     }
+    outputCount.textContent = charLabel(outputText.value.length);
+    pulseRoute();
+    flashReceived();
   });
 
   /* ---------- Copy to clipboard ---------- */
