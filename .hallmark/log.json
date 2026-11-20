@@ -1,0 +1,22 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "app",
+  "shape": "app screen",
+  "theme": "cobalt",
+  "axes": "light/grotesk-sans/cool",
+  "hero": "none (app screen)",
+  "nav": "top bar: wordmark + theme toggle",
+  "footer": "one line, browser-only note",
+  "signature": "the input/output conversion pane",
+  "sections": [
+   "control strip",
+   "input pane",
+   "output pane"
+  ],
+  "waived": [],
+  "prompt": "client-side text format converter tool",
+  "date": "2026-11-19"
+ }
+]

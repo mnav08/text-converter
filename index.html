@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text Converter</title>
+<meta name="description" content="Convert between TXT, Markdown, and HTML entirely in your browser.">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-bar">
+      <p class="app-mark">Text Converter<span class="app-mark-tag">.txt</span></p>
+    </header>
+
+    <main class="converter">
+      <div class="control-strip">
+        <div class="format-field">
+          <label for="fromFormat">From</label>
+          <select class="format-select" id="fromFormat">
+            <option value="txt">TXT</option>
+            <option value="md">Markdown</option>
+            <option value="html">HTML</option>
+          </select>
+        </div>
+
+        <svg class="route-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <div class="format-field">
+          <label for="toFormat">To</label>
+          <select class="format-select" id="toFormat"></select>
+        </div>
+
+        <div class="control-strip-actions">
+          <button type="button" class="key" id="chooseFileBtn">Choose file</button>
+          <button type="button" class="key key--primary" id="convertBtn">Convert</button>
+        </div>
+      </div>
+
+      <input type="file" id="fileInput" class="visually-hidden" accept=".txt,.md,.html,.htm">
+
+      <div class="panes">
+        <section class="pane" aria-labelledby="inputHeading">
+          <div class="pane-head">
+            <h2 class="pane-title" id="inputHeading">Input</h2>
+            <span class="pane-tag num" id="fromTag">.txt</span>
+          </div>
+          <div class="dropzone" id="dropzone">
+            <textarea class="code-area" id="inputText" placeholder="Paste text here, or drop a .txt, .md, or .html file" spellcheck="false"></textarea>
+            <p class="dropzone-hint">Drop a file anywhere in this pane, or use Choose file above.</p>
+          </div>
+        </section>
+
+        <section class="pane" aria-labelledby="outputHeading">
+          <div class="pane-head">
+            <h2 class="pane-title" id="outputHeading">Output</h2>
+            <span class="pane-tag num" id="toTag">.md</span>
+          </div>
+          <textarea class="code-area" id="outputText" readonly placeholder="Converted output will appear here" spellcheck="false"></textarea>
+          <div class="pane-foot">
+            <button type="button" class="key" id="copyBtn">Copy to clipboard</button>
+            <span class="status-text" id="copyStatus" role="status"></span>
+            <button type="button" class="key" id="downloadBtn">Download</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="app-foot">
+      <p>Runs entirely in your browser. Files are never uploaded.</p>
+    </footer>
+  </div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
